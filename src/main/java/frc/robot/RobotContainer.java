@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -45,10 +46,10 @@ public class RobotContainer
     {
         // Configure the button bindings
         configureButtonBindings();
-
+        m_robotDrive.setMaxOutput(0.5);
         m_robotDrive.setDefaultCommand(
                 //This is an inline command you can also make a whole new command if wanted
-                new RunCommand(() -> m_robotDrive.aDrive(joy1.getRawAxis(1)* -1, joy1.getRawAxis(2)),
+                new RunCommand(() -> m_robotDrive.aDrive(joy1.getRawAxis(1)* -1, (joy1.getRawAxis(2)*0.8)),
                 m_robotDrive)
                 );
     }
@@ -63,8 +64,8 @@ public class RobotContainer
     {
         //This is another inline command that calls setMaxOutput when LB is pressed
         new JoystickButton(joy1, Constants.change_speed)
-                .whenPressed(()-> m_robotDrive.setMaxOutput(0.5))
-                .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+                .whenPressed(()-> m_robotDrive.setMaxOutput(1))
+                .whenReleased(() -> m_robotDrive.setMaxOutput(0.5));
 
 
         //Drive Straight while RB is pressed
@@ -80,37 +81,34 @@ public class RobotContainer
                 // Require the robot drive
                 m_robotDrive));
 
-        // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-        new JoystickButton(joy1,Constants.turn_90)
-                .whenPressed(new TurnToAngleCommand(90, m_robotDrive).withTimeout(5));
 
-        // Turn to -90 degrees with a profile when the 'A' button is pressed, with a 5 second timeout
-        new JoystickButton(joy1, Constants.turn_90_revers)
-                .whenPressed(new TurnToAngleCommand(-90, m_robotDrive).withTimeout(5));
+        //new POVhat(joy1).Down.whenActive((new TurnToAngleCommand(90, m_robotDrive)));        
+        
+        // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+        new JoystickButton(joy1,1).whenPressed(new TurnToAngleCommand(0, m_robotDrive).withTimeout(1));
+        new JoystickButton(joy1,2).whenPressed(new TurnToAngleCommand(-90, m_robotDrive).withTimeout(1));
+        new JoystickButton(joy1,4).whenPressed(new TurnToAngleCommand(90, m_robotDrive).withTimeout(1));
+        new JoystickButton(joy1,3).whenPressed(new TurnToAngleCommand(-179, m_robotDrive).withTimeout(1));
 
         new JoystickButton(joy2, Constants.run_intake)
         .whenPressed(() -> intake_sub.run_intake(Constants.intake_speeed))
+        .whenReleased(()-> intake_sub.run_intake(0));
+
+        new JoystickButton(joy2, Constants.run_intake_rev)
+        .whenPressed(() -> intake_sub.run_intake(-Constants.intake_speeed))
         .whenReleased(()-> intake_sub.run_intake(0));
         
         new JoystickButton(joy2, Constants.run_outtake)
         .whenPressed(() -> outake_sub.run_outtake(Constants.outake_speed))
         .whenReleased(()-> outake_sub.run_outtake(0));
 
-        new JoystickButton(joy2, Constants.run_hook_up)
-        .whenPressed(() -> lift_sub.move_hook(Constants.hookup_speed))
-        .whenReleased(()-> lift_sub.move_hook(0));
-
-        new JoystickButton(joy2, Constants.run_hook_down)
-        .whenPressed(() -> lift_sub.move_hook(Constants.hookdown_speed))
-        .whenReleased(()-> lift_sub.move_hook(0));
-
         new JoystickButton(joy2, Constants.run_lift_up)
-        .whenPressed(() -> lift_sub.move_hook(Constants.liftup_speed))
-        .whenReleased(()-> lift_sub.move_hook(0));
+        .whenPressed(() -> lift_sub.move_both(Constants.hookup_speed, Constants.liftup_speed))
+        .whenReleased(()-> lift_sub.move_both(0, 0));
 
         new JoystickButton(joy2, Constants.run_lift_down)
-        .whenPressed(() -> lift_sub.move_hook(Constants.liftdown_speed))
-        .whenReleased(()-> lift_sub.move_hook(0));
+        .whenPressed(() -> lift_sub.move_both(Constants.hookdown_speed, Constants.liftdown_speed))
+        .whenReleased(()-> lift_sub.move_both(0, 0));
 
         
         
@@ -127,5 +125,10 @@ public class RobotContainer
     {
         // An ExampleCommand will run in autonomous
         return new TurnToAngleCommand(-90, m_robotDrive).withTimeout(5);
+    }
+
+    public DriveSubsystem getDrivSubsystem()
+    {
+        return m_robotDrive;
     }
 }

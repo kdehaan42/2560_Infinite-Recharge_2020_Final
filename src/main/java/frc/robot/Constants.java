@@ -22,51 +22,49 @@ public final class Constants
     public static int joy2_id = 1;
 
     //can id
-    public static int leftMotor = 1;
-    public static int leftFollowMotor = 3;
+    public static int leftMotor = 3;
+    public static int leftFollowMotor = 4;
     public static int rightMotor = 2;
-    public static int rightFollowMotor = 4;
+    public static int rightFollowMotor = 1;
     public static int intake = 5;
     public static int outtake = 6;
     public static int hook = 7;
-    public static int lift = 7;
+    public static int lift = 8;
 
     //multiplier value
-    public static double intake_speeed = 0.95;
-    public static double outake_speed = 0.95;
-    public static double hookup_speed = 0.5;
-    public static double hookdown_speed = -0.5;
-    public static double liftup_speed = 0.5;
-    public static double liftdown_speed = -0.5;
+    public static double intake_speeed = -0.95;
+    public static double outake_speed = -0.65;
+    public static double hookup_speed = -0.75;
+    public static double hookdown_speed = 0.3;
+    public static double liftup_speed = 0.0;
+    public static double liftdown_speed = -0.6;
 
     //buttons Controller 1
-    public static int change_speed = 5;
-    public static int drive_straight = 6;
+    public static int change_speed = 7;
+    public static int drive_straight = 8;
     public static int turn_90 = 1;
     public static int turn_90_revers = 3;
 
     //buttons Controller 2
-    public static int run_intake = 1;
-    public static int run_outtake = 2;
+    public static int run_intake = 7;
+    public static int run_intake_rev = 8;
+    public static int run_outtake = 6;
 
-    public static int run_hook_up = 3;
-    public static int run_hook_down = 4;
-
-    public static int run_lift_up = 5;
-    public static int run_lift_down = 6;
+    public static int run_lift_up = 1;
+    public static int run_lift_down = 2;
 
     //Navx Port
     public static Port navxPort = Port.kUSB;
 
     //PID Values
-    public static final double kStabilizationP = 1;
-    public static final double kStabilizationI = 0.5;
+    public static final double kStabilizationP = 2.00;
+    public static final double kStabilizationI = 10.0;
     public static final double kStabilizationD = 0;
 
-    public static final double kTurnP = 1;
+    public static final double kTurnP = 0.01;
     public static final double kTurnI = 0;
     public static final double kTurnD = 0;
 
-    public static final double kTurnToleranceDeg = 5;
-    public static final double kTurnRateToleranceDegPerS = 5; // degrees per second
+    public static final double kTurnToleranceDeg = 1.0;
+    public static final double kTurnRateToleranceDegPerS = 10.0; // degrees per second
 }

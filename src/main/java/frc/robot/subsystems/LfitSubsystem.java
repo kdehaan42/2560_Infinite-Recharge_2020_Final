@@ -39,6 +39,11 @@ public class LfitSubsystem extends SubsystemBase {
   {
     lift_motor.set(ControlMode.PercentOutput, speed);
   }
+  public void move_both(double hook_speed, double lift_speed)
+  {
+    hook_motor.set(hook_speed);
+    lift_motor.set(lift_speed);
+  }
 
 
 }

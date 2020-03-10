@@ -59,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase
 
   public void setMaxOutput(double v) 
   {
-
+    myDrive.setMaxOutput(v);
   }
 
   public double getTurnRate() 
