@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -25,6 +28,9 @@ public class Robot extends TimedRobot
 
     private RobotContainer robotContainer;
 
+    public SendableChooser<Integer> chooser;
+    public SendableBuilder
+
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -34,6 +40,13 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        chooser = new SendableChooser();
+        chooser.addOption​("Auto1", 1);
+        chooser.addOption​("Auto2", 2);
+        SmartDashboard.putData("Auto Chooser", chooser);
+
+        //Start Camera over USB
+        //TODO Disable once rPi is working
         CameraServer server = CameraServer.getInstance();
         server.startAutomaticCapture();
         robotContainer = new RobotContainer();
@@ -54,6 +67,8 @@ public class Robot extends TimedRobot
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        //TODO Smart Dashboard Stuff
+        //SmartDashboard.putData("3-Axis Accelerometer", );
     }
 
     /**
@@ -111,7 +126,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic()
     {
-       System.out.println(robotContainer.getDrivSubsystem().getHeading());
+
     }
 
     @Override
